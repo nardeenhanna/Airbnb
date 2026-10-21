@@ -4,9 +4,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // تفعيل استقبال الطلبات من الـ Frontend
-  app.enableCors();
+  app.enableCors({
+    origin: '*', // أو ضعي رابط Vercel الخاص بالـ Frontend
+    credentials: true,
+  });
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
