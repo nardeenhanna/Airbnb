@@ -1,1 +1,1052 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap');
+
+.navbar-container {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 16px 24px;
+  transition: all 0.3s ease;
+}
+
+.top-nav {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ff385c;
+  letter-spacing: -0.5px;
+}
+
+/* Nav Links & Tabs */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #717171;
+  cursor: pointer;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  color: #000000;
+  border-bottom-color: #000000;
+}
+
+.tab-icon-3d {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Compact Search Bar (On Scroll) */
+.compact-search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #dddddd;
+  border-radius: 40px;
+  padding: 8px 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  cursor: pointer;
+  gap: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.compact-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.compact-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.compact-divider {
+  color: #dddddd;
+}
+
+.compact-search-btn {
+  background-color: #ff385c;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Nav Right & User Menu */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.host {
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+.host:hover {
+  background-color: #f7f7f7;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background-color: #f7f7f7;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #dddddd;
+  padding: 6px 12px;
+  border-radius: 30px;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+.profile-btn:hover {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.user-avatar-placeholder {
+  background-color: #717171;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================
+   Full Search Bar
+   ========================================== */
+.search-bar-wrapper {
+  max-width: 850px;
+  margin: 16px auto 0;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #dddddd;
+  border-radius: 40px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  position: relative;
+}
+
+.search-section {
+  flex: 1;
+  padding: 10px 24px;
+  border-radius: 40px;
+  cursor: pointer;
+  position: relative;
+}
+
+.search-section:hover,
+.search-section.section-active {
+  background-color: #ebebeb;
+}
+
+.search-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #222222;
+}
+
+.search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.875rem;
+  color: #222222;
+}
+
+.search-placeholder {
+  font-size: 0.875rem;
+  color: #717171;
+}
+
+.search-divider {
+  width: 1px;
+  height: 32px;
+  background-color: #dddddd;
+}
+
+.search-button {
+  background-color: #ff385c;
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 16px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Popups & Modals */
+.where-popup,
+.when-popup,
+.who-popup {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  z-index: 100;
+  min-width: 380px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 8px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 240px;
+  z-index: 100;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-item:hover {
+  background-color: #f7f7f7;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #dddddd;
+  margin: 4px 0;
+}
+/* ==========================================
+   1. إصلاح أحجام أيقونات المدن والقوائم المنسدلة
+   ========================================== */
+.icon-box {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.city-svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.dest-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.dest-item:hover {
+  background-color: #f7f7f7;
+}
+
+.dest-text .title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #222222;
+}
+
+.dest-text .subtitle {
+  font-size: 0.8rem;
+  color: #717171;
+}
+
+/* خلفيات الأيقونات */
+.bg-blue { background-color: #e6f0fa; }
+.bg-pink { background-color: #fde8e8; }
+.bg-orange { background-color: #feebc8; }
+.bg-lightblue { background-color: #ebf8ff; }
+.bg-brown { background-color: #fef3c7; }
+
+/* ==========================================
+   2. إصلاح أحجام صور الكروت والـ Grid
+   ========================================== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  padding: 20px 0;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 20 / 19;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================
+   Airbnb Custom Footer Styles
+   ========================================== */
+.airbnb-footer {
+  background-color: #f7f7f7;
+  border-top: 1px solid #dddddd;
+  padding-top: 48px;
+  color: #222222;
+  margin-top: 60px;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 24px 24px;
+}
+
+/* 1. Getaways / Tabs Section */
+.getaways-section {
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 40px;
+}
+
+.getaways-section h2 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.tabs-header {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #dddddd;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #717171;
+  cursor: pointer;
+  padding-bottom: 8px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active, 
+.tab-btn:hover {
+  color: #222222;
+  border-bottom-color: #222222;
+}
+
+.destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px 24px;
+}
+
+.destination-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+}
+
+.dest-name {
+  font-weight: 600;
+  color: #222222;
+}
+
+.dest-type {
+  color: #717171;
+  font-size: 0.8rem;
+}
+
+.show-more .dest-name {
+  cursor: pointer;
+  color: #222222;
+  font-weight: 600;
+}
+
+/* 2. Directory Links Section */
+.directory-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+  padding: 40px 0;
+  border-bottom: 1px solid #dddddd;
+}
+
+.directory-col h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #222222;
+}
+
+.directory-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.directory-col a {
+  color: #222222;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.directory-col a:hover {
+  text-decoration: underline;
+}
+
+/* 3. Bottom Bar */
+.bottom-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  gap: 16px;
+  font-size: 0.875rem;
+}
+
+.bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bottom-left a {
+  color: #222222;
+  text-decoration: none;
+}
+
+.bottom-left a:hover {
+  text-decoration: underline;
+}
+
+.dot {
+  color: #717171;
+}
+
+.privacy-choices {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.privacy-icon {
+  font-size: 0.75rem;
+  background: #0077c5;
+  color: white;
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+.bottom-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lang-currency-btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: #222222;
+}
+
+.lang-currency-btn:hover {
+  text-decoration: underline;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.social-icons a {
+  color: #222222;
+  transition: opacity 0.2s;
+}
+
+.social-icons a:hover {
+  opacity: 0.7;
+}
+
+/* ==========================================
+   Where Popup (Suggested Destinations)
+   ========================================== */
+.where-popup {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  width: 400px;
+  max-height: 460px;
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 24px 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  overflow-y: auto;
+}
+
+.where-popup-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #222222;
+  margin-bottom: 12px;
+  padding-left: 12px;
+}
+
+.where-destinations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.where-dest-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.where-dest-item:hover {
+  background-color: #f7f7f7;
+}
+
+.where-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.where-dest-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.where-dest-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #222222;
+  margin: 0;
+}
+
+.where-dest-subtitle {
+  font-size: 0.825rem;
+  color: #717171;
+  margin: 2px 0 0 0;
+}
+/* ==========================================
+   When Popup (Dates & Flexible Views)
+   ========================================== */
+.when-popup {
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 720px;
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 24px 32px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  color: #222222;
+}
+
+.when-tab-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.when-tab-toggle {
+  background-color: #ebebeb;
+  padding: 4px;
+  border-radius: 30px;
+  display: flex;
+  gap: 4px;
+}
+
+.when-tab-toggle button {
+  border: none;
+  background: transparent;
+  padding: 8px 24px;
+  border-radius: 24px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #222222;
+  transition: all 0.2s ease;
+}
+
+.when-tab-toggle button.active {
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Calendar View */
+.calendar-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.month-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.month-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.cal-nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.cal-nav-btn:hover {
+  background-color: #f7f7f7;
+}
+
+.weekdays-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #717171;
+  margin-bottom: 8px;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.day-btn {
+  background: none;
+  border: none;
+  height: 38px;
+  width: 38px;
+  margin: 0 auto;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #717171;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-btn.bold-day {
+  color: #222222;
+  font-weight: 600;
+}
+
+.day-btn:hover {
+  border: 1px solid #222222;
+}
+
+.day-btn.today-active {
+  background-color: #222222;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Date Selectors Row */
+.date-selectors-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.selector-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #dddddd;
+  border-radius: 20px;
+  padding: 10px 16px;
+  min-width: 260px;
+  cursor: pointer;
+}
+
+.selector-label-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.selector-sub {
+  font-size: 0.725rem;
+  color: #717171;
+  font-weight: 600;
+}
+
+.selector-val {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #222222;
+}
+
+/* Flexible View */
+.flexible-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.flex-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222222;
+  margin-bottom: 16px;
+}
+
+.duration-pills {
+  display: flex;
+  gap: 12px;
+}
+
+.pill-btn {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pill-btn:hover {
+  border-color: #222222;
+}
+
+.pill-btn.active {
+  border: 2px solid #222222;
+  background-color: #f7f7f7;
+  font-weight: 600;
+}
+
+.months-cards-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.months-cards-grid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 8px 4px;
+  width: 100%;
+  scrollbar-width: none;
+}
+
+.month-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 16px 12px;
+  min-width: 105px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.month-card-icon {
+  color: #717171;
+  margin-bottom: 8px;
+}
+
+.month-card-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #222222;
+}
+
+.month-card-year {
+  font-size: 0.75rem;
+  color: #717171;
+}
+
+.month-card:hover {
+  border-color: #222222;
+}
+
+.month-card.selected {
+  border: 2px solid #222222;
+  background-color: #f7f7f7;
+}
+
+.months-scroll-next {
+  position: absolute;
+  right: -12px;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================
+   Who Popup (Guests Counter)
+   ========================================== */
+.who-popup {
+  position: absolute;
+  top: 64px;
+  right: 0;
+  width: 380px;
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 16px 24px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+  z-index: 200;
+  color: #222222;
+}
+
+.who-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.who-row:last-child {
+  border-bottom: none;
+}
+
+.who-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.who-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #222222;
+}
+
+.who-sub {
+  font-size: 0.8rem;
+  color: #717171;
+  margin-top: 2px;
+}
+
+.who-counter {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.counter-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #b0b0b0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #717171;
+  transition: all 0.2s ease;
+}
+
+.counter-btn:hover:not(.disabled) {
+  border-color: #222222;
+  color: #222222;
+}
+
+.counter-btn.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: #dddddd;
+}
+
+.counter-val {
+  font-size: 0.95rem;
+  font-weight: 600;
+  width: 16px;
+  text-align: center;
+}
+
+/* ==========================================
+   الخط الأسفل للتبويبات (Active Underline)
+   ========================================== */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent; /* خط شفاف افتراضياً */
+  color: #717171;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  color: #222222;
+  border-bottom-color: #dddddd; /* خط رمادي عند التمرير بالماوس */
+}
+
+/* الخيار المحدد (الخط الأسود المحدد) */
+.nav-item.active {
+  color: #222222 !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid #222222 !important; /* الخط الأسود */
+}
+
+.tab-icon-3d {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* استيراد خط Montserrat الاحترافي العريض */
+
+/* تطبيق التغيير على عناوين الأقسام مباشرة */
+.section-title,
+.section-title span,
+h2.section-title {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #222222 !important;
+  letter-spacing: -0.3px !important;
+}
+
+/* تكبير وتوضيح السهم الجانبي بجانب العنوان */
+.header-arrow {
+  font-size: 20px !important;
+  stroke-width: 1.5 !important;
+  color: #222222 !important;
+}

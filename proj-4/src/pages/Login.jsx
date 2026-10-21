@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import API from '../api/axios';
 
-export default function AuthModal({ isOpen = true, onClose }) {
+export default function AuthModal({ isOpen = true, onClose, onLoginSuccess }) {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1); // 1 = Login/Signup, 2 = Create Account
   const [phoneOrEmail, setPhoneOrEmail] = useState('');
+  const [password, setPassword] = useState(''); // 🔑 كلمة السر
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   
   // Form state for Step 2
   const [formData, setFormData] = useState({
@@ -15,14 +21,39 @@ export default function AuthModal({ isOpen = true, onClose }) {
 
   if (!isOpen) return null;
 
-  const handleContinueStep1 = (e) => {
+  // 1️⃣ الخطوة الأولى: محاولة تسجيل الدخول أو الانتقال لإنشاء حساب
+  const handleContinueStep1 = async (e) => {
     e.preventDefault();
+    setErrorMessage('');
+
     if (phoneOrEmail.trim() !== '') {
-      // If user typed an email, pre-fill it by default for Step 2
-      if (phoneOrEmail.includes('@')) {
-        setFormData((prev) => ({ ...prev, email: phoneOrEmail }));
+      if (!password) {
+        setErrorMessage('الرجاء إدخال كلمة السر للاستمرار');
+        return;
       }
-      setStep(2);
+
+      setLoading(true);
+      try {
+        const res = await API.post('/auth/login', {
+          email: phoneOrEmail,
+          password: password,
+        });
+
+        if (res.data.access_token) {
+          localStorage.setItem('token', res.data.access_token);
+        }
+        
+        if (onLoginSuccess) onLoginSuccess();
+        if (onClose) onClose();
+        navigate('/');
+      } catch (err) {
+        if (phoneOrEmail.includes('@')) {
+          setFormData((prev) => ({ ...prev, email: phoneOrEmail }));
+        }
+        setStep(2);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -32,6 +63,45 @@ export default function AuthModal({ isOpen = true, onClose }) {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+  };
+
+  // 2️⃣ الخطوة الثانية: إنشاء حساب جديد حقيقي في NestJS
+  const handleCreateAccountSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage('');
+    setLoading(true);
+
+    const payload = {
+      name: `${formData.firstName} ${formData.lastName}`.trim(),
+      email: formData.email,
+      password: password || '12345678',
+    };
+
+    try {
+      let res;
+      try {
+        res = await API.post('/auth/register', payload);
+      } catch (registerErr) {
+        // تجربة مسار signup البديل في حال كان المعرف مفضلاً في السيرفر
+        res = await API.post('/auth/signup', payload);
+      }
+
+      if (res?.data?.access_token) {
+        localStorage.setItem('token', res.data.access_token);
+      }
+
+      alert('تم إنشاء الحساب بنجاح!');
+
+      if (onLoginSuccess) onLoginSuccess();
+      if (onClose) onClose();
+      navigate('/');
+    } catch (err) {
+      console.error('NestJS Registration Error Details:', err.response?.data);
+      const msg = err.response?.data?.message;
+      setErrorMessage(Array.isArray(msg) ? msg.join(', ') : msg || 'حدث خطأ أثناء إنشاء الحساب.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,6 +131,13 @@ export default function AuthModal({ isOpen = true, onClose }) {
           </button>
         </div>
 
+        {/* عرض رسالة الخطأ إن وجدت */}
+        {errorMessage && (
+          <div className="mb-4 rounded-xl bg-red-50 p-3 text-center text-xs font-semibold text-red-600 border border-red-200">
+            {errorMessage}
+          </div>
+        )}
+
         {/* --- STEP 1: LOG IN OR SIGN UP --- */}
         {step === 1 && (
           <div>
@@ -75,7 +152,7 @@ export default function AuthModal({ isOpen = true, onClose }) {
             </h2>
 
             <form onSubmit={handleContinueStep1}>
-              <div className="mb-4">
+              <div className="mb-3">
                 <input
                   type="text"
                   placeholder="Phone number or email"
@@ -86,11 +163,23 @@ export default function AuthModal({ isOpen = true, onClose }) {
                 />
               </div>
 
+              <div className="mb-4">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full rounded-xl border border-gray-400 p-4 text-base focus:border-black focus:outline-none"
+                />
+              </div>
+
               <button
                 type="submit"
-                className="mb-6 w-full rounded-xl bg-[#E81948] py-3.5 text-base font-semibold text-white transition hover:bg-[#D70466]"
+                disabled={loading}
+                className="mb-6 w-full rounded-xl bg-[#E81948] py-3.5 text-base font-semibold text-white transition hover:bg-[#D70466] disabled:opacity-50 cursor-pointer"
               >
-                Continue
+                {loading ? 'Processing...' : 'Continue'}
               </button>
             </form>
 
@@ -124,7 +213,7 @@ export default function AuthModal({ isOpen = true, onClose }) {
             <h2 className="text-2xl font-bold text-gray-900">Let’s create your account</h2>
             <p className="mb-6 text-sm text-gray-500">This information is required to book or host.</p>
 
-            <form onSubmit={(e) => { e.preventDefault(); alert('Account created!'); }}>  {/*الاكونت اتعمل */}
+            <form onSubmit={handleCreateAccountSubmit}>
               
               {/* Legal Name */}
               <div className="mb-4">
@@ -151,10 +240,6 @@ export default function AuthModal({ isOpen = true, onClose }) {
                     className="w-full p-3.5 text-sm focus:bg-gray-50 focus:outline-none"
                   />
                 </div>
-                <p className="mt-1.5 text-xs text-gray-500">
-                  Make sure it matches the name on your government ID. If you go by another name, you can{' '}
-                  <span className="underline cursor-pointer font-medium text-gray-800">add a preferred first name</span>.
-                </p>
               </div>
 
               {/* Date of Birth */}
@@ -186,9 +271,21 @@ export default function AuthModal({ isOpen = true, onClose }) {
                   required
                   className="w-full rounded-xl border border-gray-400 p-3.5 text-sm focus:border-black focus:outline-none"
                 />
-                <p className="mt-1 text-xs text-gray-500">
-                  We’ll email you trip confirmations and receipts.
-                </p>
+              </div>
+
+              {/* Password */}
+              <div className="mb-4">
+                <label className="mb-1.5 block text-sm font-semibold text-gray-900">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full rounded-xl border border-gray-400 p-3.5 text-sm focus:border-black focus:outline-none"
+                />
               </div>
 
               {/* Promotions Box */}
@@ -210,21 +307,13 @@ export default function AuthModal({ isOpen = true, onClose }) {
                 </label>
               </div>
 
-              {/* Terms Text */}
-              <p className="mb-6 text-xs text-gray-600 leading-relaxed">
-                By selecting <span className="font-bold text-gray-900">Agree and continue</span>, I agree to Airbnb’s{' '}
-                <span className="underline cursor-pointer font-semibold text-gray-800">Terms of Service</span>,{' '}
-                <span className="underline cursor-pointer font-semibold text-gray-800">Payments Terms of Service</span>, and{' '}
-                <span className="underline cursor-pointer font-semibold text-gray-800">Nondiscrimination Policy</span>, and acknowledge the{' '}
-                <span className="underline cursor-pointer font-semibold text-gray-800">Privacy Policy</span>.
-              </p>
-
               {/* Agree and Continue Button */}
               <button
                 type="submit"
-                className="w-full rounded-xl bg-[#E81948] py-3.5 text-base font-semibold text-white transition hover:bg-[#D70466]"
+                disabled={loading}
+                className="w-full rounded-xl bg-[#E81948] py-3.5 text-base font-semibold text-white transition hover:bg-[#D70466] disabled:opacity-50 cursor-pointer"
               >
-                Agree and continue
+                {loading ? 'Creating account...' : 'Agree and continue'}
               </button>
 
             </form>
